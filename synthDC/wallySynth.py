@@ -6,11 +6,16 @@ import subprocess
 from multiprocessing import Pool
 
 
-def runSynth(config, mod, tech, freq, maxopt, usesram):
+def runSynth(config, mod, tech, freq, maxopt, usesram, cdns=False):
     global pool
     prefix = "syn_sram_" if usesram else "syn_"
+    if cdns:
+        prefix = ""
     cfg = prefix + config
-    command = f"make synth DESIGN=wallypipelinedcore CONFIG={cfg} MOD={mod} TECH={tech} DRIVE=FLOP FREQ={freq} MAXOPT={maxopt} USESRAM={usesram} MAXCORES=1"
+    if cdns:
+        command = f"make cdns_synth DESIGN=wallypipelinedcore CONFIG={cfg} MOD={mod} TECH={tech} DRIVE=FLOP FREQ={freq} MAXOPT={maxopt} USESRAM={usesram} MAXCORES=16"
+    else:
+        command = f"make synth DESIGN=wallypipelinedcore CONFIG={cfg} MOD={mod} TECH={tech} DRIVE=FLOP FREQ={freq} MAXOPT={maxopt} USESRAM={usesram} MAXCORES=1"
     pool.map(mask, [command])
 
 def mask(command):
@@ -19,7 +24,7 @@ def mask(command):
 
 if __name__ == '__main__':
     
-    techs = ['sky130', 'sky90', 'tsmc28', 'tsmc28psyn']
+    techs = ['sky130', 'sky90', 'tsmc28', 'tsmc28psyn', 'asap7', 'freepdk15']
     allConfigs = ['rv32gc', 'rv32imc', 'rv64gc', 'rv64imc', 'rv32e', 'rv32i', 'rv64i']
     freqVaryPct = [-20, -12, -8, -6, -4, -2, 0, 2, 4, 6, 8, 12, 20]
 #    freqVaryPct = [-20, -10, 0, 10, 20]
@@ -37,6 +42,7 @@ if __name__ == '__main__':
     parser.add_argument("-e", "--tech", choices=techs, help = "Technology")
     parser.add_argument("-o", "--maxopt", action='store_true', help = "Turn on MAXOPT")
     parser.add_argument("-r", "--usesram", action='store_true', help = "Use SRAM modules")
+    parser.add_argument("-g", "--genus", action='store_true', help = "Set for Genus")
 
     args = parser.parse_args()
 
@@ -44,25 +50,30 @@ if __name__ == '__main__':
     maxopt = int(args.maxopt)
     usesram = int(args.usesram)
     mod = 'orig'
+    genus = args.genus
+    if genus :
+        cdns = True
+    else:
+        cdns = False
 
     if args.freqsweep:
         sc = args.freqsweep
         config = args.version if args.version else 'rv32e'
         for freq in [round(sc+sc*x/100) for x in freqVaryPct]: # rv32e freq sweep
-            runSynth(config, mod, tech, freq, maxopt, usesram)
+            runSynth(config, mod, tech, freq, maxopt, usesram, cdns)
     elif args.configsweep:
         defaultfreq = 1500 if tech == 'sky90' else 5000
         freq = args.targetfreq if args.targetfreq else defaultfreq
         for config in ['rv32i', 'rv64gc', 'rv64i', 'rv32gc', 'rv32imc', 'rv32e']: #configs
-            runSynth(config, mod, tech, freq, maxopt, usesram)
+            runSynth(config, mod, tech, freq, maxopt, usesram, cdns)
     elif args.featuresweep:
         defaultfreq = 500 if tech == 'sky90' else 1500
         freq = args.targetfreq if args.targetfreq else defaultfreq
         config = args.version if args.version else 'rv64gc'
         for mod in ['noAtomic', 'noFPU', 'noMulDiv', 'noPriv', 'pmp0']: 
-            runSynth(config, mod, tech, freq, maxopt, usesram)
+            runSynth(config, mod, tech, freq, maxopt, usesram, cdns)
     else:
         defaultfreq = 500 if tech == 'sky90' else 1500
         freq = args.targetfreq if args.targetfreq else defaultfreq
         config = args.version if args.version else 'rv64gc'
-        runSynth(config, mod, tech, freq, maxopt, usesram)
+        runSynth(config, mod, tech, freq, maxopt, usesram, cdns)

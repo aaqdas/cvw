@@ -45,9 +45,9 @@ $(CONFIG):
 	@echo $(CONFIG)
 	cp -r $(OLDCONFIGDIR)/shared/*.vh $(CONFIGDIR)
 ifeq ($(MOD), orig)
-	cp -rf $(OLDCONFIGDIR)/deriv/$(CONFIG)/config.vh $(CONFIGDIR) | true
+	cp -rf $(OLDCONFIGDIR)/$(CONFIG)/config.vh $(CONFIGDIR) | true
 else
-	cp -rf $(OLDCONFIGDIR)/deriv/$(CONFIG)_$(MOD)/config.vh $(CONFIGDIR) | true
+	cp -rf $(OLDCONFIGDIR)/$(CONFIG)_$(MOD)/config.vh $(CONFIGDIR) | true
 endif
 
 ifeq ($(SAIFPOWER), 1)
@@ -64,6 +64,13 @@ mkdirecs:
 	@mkdir -p $(OUTPUTDIR)/unmapped
 
 synth: mkdirecs configs rundc # clean
+cdns_synth: mkdirecs configs rungenus
+
+rungenus:
+# Genus Only Supports ASAP 7nm (for now)
+	genus -f scripts/genus_$(NAME).tcl -log $(OUTPUTDIR)/genus.log
+
+
 
 rundc:
 ifeq ($(TECH), tsmc28psyn)

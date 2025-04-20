@@ -59,7 +59,8 @@ module rom1p1r #(parameter ADDR_WIDTH = 8, DATA_WIDTH = 32, PRELOAD_ENABLED = 0)
             string       WALLY_DIR = getenvval("WALLY"); 
             $readmemh({WALLY_DIR,"/fpga/src/boot.mem"}, ROM, 0);  // load boot ROM for FPGA
         `else
-            $readmemh({"$WALLY/fpga/src/boot.mem"}, ROM, 0);  // load boot ROM for FPGA
+            ROM[0] = 'h00002197;
+            // $readmemh({"$WALLY/fpga/src/boot.mem"}, ROM, 0);  // load boot ROM for FPGA
         `endif
       end else begin // put something in the ROM so it is not optimized away
         ROM[0] = 'h00002197;
