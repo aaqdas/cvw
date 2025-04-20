@@ -17,7 +17,7 @@ echo "Executing Wally setup.sh"
 if [ -d /opt/riscv ]; then
     export RISCV=/opt/riscv
 elif [ -d ~/riscv ]; then
-    export RISCV=~/riscv
+    export RISCV=~/riscv/gcc
 else
     # set the $RISCV directory here and remove the subsequent two lines
     # export RISCV=
@@ -33,7 +33,7 @@ echo \$WALLY set to "${WALLY}"
 # utility functions in Wally repository
 export PATH=$WALLY/bin:$PATH
 
-# Setup cvw-arch-verif paths
+# Setup cvw-arch-verif paths (can be ignored and not needed if you are not using cvw-arch-verif)
 if [ -e "${WALLY}"/addins/cvw-arch-verif/setup.sh ]; then
     source "${WALLY}"/addins/cvw-arch-verif/setup.sh
 else
@@ -43,7 +43,7 @@ fi
 # Verilator needs a larger core file size to simulate CORE-V Wally
 ulimit -c 300000
 
-# load site licenses and tool locations
+# load site licenses and tool locations (not needed in my case)
 if [ -e "${RISCV}"/site-setup.sh ]; then
     source "${RISCV}"/site-setup.sh
 else

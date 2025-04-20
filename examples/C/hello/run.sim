@@ -1,0 +1,1 @@
+wsim --sim verilator --elf hello --tb testbench

@@ -64,6 +64,7 @@ Then fork and clone the repo, source setup, make the tests and run regression
 	$ cd examples/C/hello
 	$ make
 	$ wsim --sim verilator rv64gc --elf hello
+	$ wsim --sim vcs rv64gc --elf hello 
 	Hello Wally!
 	0 1 2 3 4 5 6 7 8 9 
 	$ spike hello
