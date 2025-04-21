@@ -187,6 +187,11 @@ report_summary -directory $rpt_dir
 
 write_hdl > ${outputDir}/mapped/wallypipelinedcore.sv
 
+
+report_power -module alu > ${rpt_dir}/alu_power.rpt
+report_power -module dcache > ${rpt_dir}/dcache_power.rpt
+report_power -inst /wallypipelinedcorewrapper/dut/lsu/dcache > ${rpt_dir}/dcache_inst_power.rpt
+report_power -inst /wallypipelinedcorewrapper/dut/ieu/dp/alu > ${rpt_dir}/alu_inst_power.rpt
 # end run clock and echo run time in minutes
 set t2 [clock seconds]
 set t [expr $t2 - $t1]
