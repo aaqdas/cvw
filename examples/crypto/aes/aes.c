@@ -612,11 +612,11 @@ int main(int argc, char *argv[]) {
   }
 
   // Test the Key Expansion
-  KeyExpansion(expandedKey, key, size, expandedKeySize);
-  printf("\nExpanded Key (hex format):\n");
-  for (i = 0; i < expandedKeySize; i++) {
-    printf("%2.2x%c", expandedKey[i], ((i + 1) % 16) ? ' ' : '\n');
-  }  
+  // KeyExpansion(expandedKey, key, size, expandedKeySize);
+  // printf("\nExpanded Key (hex format):\n");
+  // for (i = 0; i < expandedKeySize; i++) {
+  //   printf("%2.2x%c", expandedKey[i], ((i + 1) % 16) ? ' ' : '\n');
+  // }  
   
   printf("\nPlaintext (hex format):\n");
   for (i = 0; i < 16; i++) {

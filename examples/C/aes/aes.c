@@ -110,11 +110,11 @@ char aes_decrypt(unsigned char *input, unsigned char *output, unsigned char *key
 
 // Helper function to print AES state
 void printState(const unsigned char *state) {
-  for (int col = 0; col < 4; col++) {
-    printf("%02x %02x %02x %02x ",
-           state[col], state[col + 4], state[col + 8], state[col + 12]);
-  }
-  printf("\n");
+  // for (int col = 0; col < 4; col++) {
+  //   // printf("%02x %02x %02x %02x ",
+  //         //  state[col], state[col + 4], state[col + 8], state[col + 12]);
+  // }
+  // printf("\n");
 }
 
 unsigned char getSBoxValue(unsigned char num) {
@@ -286,7 +286,7 @@ void aes_cipher(unsigned char *state, unsigned char *roundKey) {
   printState(state);
 
   addRoundKey(state, roundKey);
-  printf("\n");  // Optional: for spacing
+  // printf("\n");  // Optional: for spacing
 }
 
 void createRoundKey(unsigned char *expandedKey, unsigned char *roundKey) {
@@ -306,7 +306,7 @@ void aes_main(unsigned char *state, unsigned char *expandedKey, int nbrRounds) {
   // Initial round key
   createRoundKey(expandedKey, roundKey);
   printState(state);
-  printf("\n");
+  // printf("\n");
 
   addRoundKey(state, roundKey);
 
@@ -606,38 +606,39 @@ int main(int argc, char *argv[]) {
   unsigned char decryptedtext[16];
   int i;
 
-  printf("Implementation of the AES algorithm in C\n");
-  printf("\nCipher Key (hex format):\n");
-  for (i = 0; i < 16; i++) {
-    // Print characters in hex format, 16 chars per line
-    printf("%2.2x%c", key[i], ((i + 1) % 16) ? ' ' : '\n');
-  }
+  // printf("Implementation of the AES algorithm in C\n");
+  // printf("\nCipher Key (hex format):\n");
+  // for (i = 0; i < 16; i++) {
+  //   // Print characters in hex format, 16 chars per line
+  //   printf("%2.2x%c", key[i], ((i + 1) % 16) ? ' ' : '\n');
+  // }
 
   // Test the Key Expansion
-  KeyExpansion(expandedKey, key, size, expandedKeySize);
-  printf("\nExpanded Key (hex format):\n");
-  for (i = 0; i < expandedKeySize; i++) {
-    printf("%2.2x%c", expandedKey[i], ((i + 1) % 16) ? ' ' : '\n');
-  }  
+  // KeyExpansion(expandedKey, key, size, expandedKeySize);
+  // printf("\nExpanded Key (hex format):\n");
+  // for (i = 0; i < expandedKeySize; i++) {
+  //   printf("%2.2x%c", expandedKey[i], ((i + 1) % 16) ? ' ' : '\n');
+  // }  
   
-  printf("\nPlaintext (hex format):\n");
-  for (i = 0; i < 16; i++) {
-    printf("%2.2x%c", plaintext[i], ((i + 1) % 16) ? ' ' : '\n');
-  }
+  // printf("\nPlaintext (hex format):\n");
+  // for (i = 0; i < 16; i++) {
+  //   printf("%2.2x%c", plaintext[i], ((i + 1) % 16) ? ' ' : '\n');
+  // }
 
   // AES Encryption
   aes_encrypt(plaintext, ciphertext, key, SIZE_32);  
-  printf("\nCiphertext (hex format):\n");
-  for (i = 0; i < 16; i++) {
-      printf("%02x%c", ciphertext[i], ((i + 1) % 16) ? ' ' : '\n');
-    }
+  printf("Fin");
+  // printf("\nCiphertext (hex format):\n");
+  // for (i = 0; i < 16; i++) {
+  //     printf("%02x%c", ciphertext[i], ((i + 1) % 16) ? ' ' : '\n');
+  //   }
     
   // AES Decryption
-  aes_decrypt(ciphertext, decryptedtext, key, SIZE_32);
-  printf("\nDecrypted text (hex format):\n");
-  for (i = 0; i < 16; i++) {
-      printf("%2.2x%c", decryptedtext[i], ((i + 1) % 16) ? ' ' : '\n');
-    }
+  // aes_decrypt(ciphertext, decryptedtext, key, SIZE_32);
+  // printf("\nDecrypted text (hex format):\n");
+  // for (i = 0; i < 16; i++) {
+  //     printf("%2.2x%c", decryptedtext[i], ((i + 1) % 16) ? ' ' : '\n');
+  //   }
 
   return 0;
 }
