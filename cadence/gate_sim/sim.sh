@@ -1,0 +1,6 @@
+
+xrun +access+rwc -setenv CADENCE_ENABLE_AVSREQ_44905_PHASE_1=1 -incdir ../../config/rv64gc -incdir ../../config/shared -incdir ../../testbench -compile ../../src/cvw.sv ../../testbench/testbench.sv ../../testbench/common-xlm/*.sv ../synthesis/alu/cadence/output/*.v ../../src/*/*.sv ../../src/*/*/*.sv /home/min/a/aaqdas/Documents/aes_build/asap7nm/frontend/Verilog/asap7sc7p5t_AO_LVT_TT_201020.v /home/min/a/aaqdas/Documents/aes_build/asap7nm/frontend/Verilog/asap7sc7p5t_INVBUF_LVT_TT_201020.v /home/min/a/aaqdas/Documents/aes_build/asap7nm/frontend/Verilog/asap7sc7p5t_OA_LVT_TT_201020.v /home/min/a/aaqdas/Documents/aes_build/asap7nm/frontend/Verilog/asap7sc7p5t_SEQ_LVT_TT_220101.v /home/min/a/aaqdas/Documents/aes_build/asap7nm/frontend/Verilog/asap7sc7p5t_SIMPLE_LVT_TT_201020.v +ElfFile=/home/min/a/aaqdas/Documents/cvw/examples/C/aes/aes -define "GATE_SIM=1" -input dump.tcl
+xrun +access+rwc +nc64bit -loadpli1 debpli.so:novas_pli_boot -elaborate -top testbench ../../testbench/testbench.sv -incdir ../../config/rv64gc -incdir ../../config/shared -incdir ../../testbench +ElfFile=/home/min/a/aaqdas/Documents/cvw/examples/C/aes/aes -define "GATE_SIM=1"
+xrun -R +ElfFile=/home/min/a/aaqdas/Documents/cvw/examples/C/aes/aes -input dump.tcl -define "GATE_SIM=1"
+
+

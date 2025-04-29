@@ -1,0 +1,51 @@
+
+
+Working Directory = /home/min/a/aaqdas/Documents/cvw/cadence/synthesis/dcache
+QoS Summary for dcache_wrapper
+================================================================================
+Metric                          generic         map            
+================================================================================
+Slack (ps):                       -77             -72
+  R2R (ps):                       -77             -72
+  I2R (ps):                  no_value        no_value
+  R2O (ps):                  no_value        no_value
+  I2O (ps):                  no_value        no_value
+  CG  (ps):                  no_value        no_value
+TNS (ps):                  -8,985,912     -10,115,282
+  R2R (ps):                -8,985,912     -10,115,282
+  I2R (ps):                  no_value        no_value
+  R2O (ps):                  no_value        no_value
+  I2O (ps):                  no_value        no_value
+  CG  (ps):                  no_value        no_value
+Failing Paths:                140,235         166,589
+Cell Area:                     77,987          72,269
+Total Cell Area:               77,987          72,269
+Leaf Instances:               412,904         467,601
+Total Instances:              412,904         467,601
+Utilization (%):                 0.00            0.00
+Tot. Net Length (um):        no_value        no_value
+Avg. Net Length (um):        no_value        no_value
+Route Overflow H (%):        no_value        no_value
+Route Overflow V (%):        no_value        no_value
+MBCI(%) (bits/gate) :            0.00            0.00
+Norm Cong Hotspot Area:
+  Max Cong:                  no_value        no_value
+  Tot Cong:                  no_value        no_value
+================================================================================
+CPU  Runtime (h:m:s):        00:58:29        01:29:19
+Real Runtime (h:m:s):        00:15:36        00:24:27
+CPU  Elapsed (h:m:s):        00:59:12        02:28:33
+Real Elapsed (h:m:s):        00:15:53        00:40:21
+Memory (MB):                  3305.49         3547.47
+================================================================================
+================================================================================
+Flow Settings:
+================================================================================
+Total Runtime (h:m:s): 00:41:11
+Total Memory (MB):     3555.47
+Executable Version:    21.17-s066_1
+================================================================================
+Total Cell Area =  Cell Area + Physical Cell Area
+Total Instances =  Leaf Instances + Physical Instances
+
+
