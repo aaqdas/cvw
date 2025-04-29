@@ -24,6 +24,7 @@
 // either express or implied. See the License for the specific language governing permissions
 // and limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////
+`timescale 1ps/1ps
 
 `include "config.vh"
 `include "tests.vh"
@@ -255,8 +256,10 @@ module testbench;
       $finish;
     end
     if (MAKE_VCD) begin
-      $dumpfile("testbench.vcd");
-      $dumpvars;
+      $fsdbDumpfile("testbench");
+      $fsdbDumpvars(0, testbench);
+      // $fsdbDumpvars(0, dut.core.ieu.dp.alu);
+      // $fsdbDumpvars(0, dut.core.lsu);
     end
   end // initial begin
 
@@ -635,7 +638,7 @@ module testbench;
 
   // generate clock to sequence tests
   always begin
-    clk = 1'b1; # 5; clk = 1'b0; # 5;
+    clk = 1'b1; # 250; clk = 1'b0; # 250;
   end
 
   if(RVVI_SYNTH_SUPPORTED) begin : rvvi_synth
@@ -701,7 +704,7 @@ module testbench;
     always @(posedge clk) begin
       if (TEST == "buildroot") begin
         if (~dut.uncoregen.uncore.uartgen.uart.MEMWb & dut.uncoregen.uncore.uartgen.uart.uartPC.A == 3'b000 & ~dut.uncoregen.uncore.uartgen.uart.uartPC.DLAB) begin
-          $fwrite(uartoutfile, "%c", dut.uncoregen.uncore.uartgen.uart.uartPC.Din); // append characters one at a time so we see a consistent log appearing during the run
+          // $fwrite(uartoutfile, "%c", dut.uncoregen.uncore.uartgen.uart.uartPC.Din); // append characters one at a time so we see a consistent log appearing during the run
           $fflush(uartoutfile);
         end
       end
@@ -724,8 +727,14 @@ module testbench;
    // if (functionName.PCM == 0 & dut.core.ifu.InstrM == 0 & dut.core.InstrValidM & PrevPCZero)
     //  $error("Program fetched illegal instruction 0x00000000 from address 0x00000000 twice in a row.  Usually due to fault with no fault handler.");
   end
+  // initial begin
+  //   TestComplete = 1'b0;
+  //   #35140500;
+  //   TestComplete = 1'b1;
+  // end
 
   DCacheFlushFSM #(P) DCacheFlushFSM(.clk, .start(DCacheFlushStart), .done(DCacheFlushDone));
+  // assign DCacheFlushDone = 1'b1; // JP: remove this when DCacheFlushFSM is implemented
 
   if(P.ZICSR_SUPPORTED) begin
     logic [P.XLEN-1:0] Minstret;
