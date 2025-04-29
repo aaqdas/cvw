@@ -26,8 +26,15 @@
 // either express or implied. See the License for the specific language governing permissions 
 // and limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////
+`ifdef JOULES
+import cvw::*; 
+`include "config.vh"
+`include "parameter-defs.vh"
+module wallypipelinedcore (
+`else
+module wallypipelinedcore #(parameter cvw_t P) (
+`endif
 
-module wallypipelinedcore import cvw::*; #(parameter cvw_t P) (
    input  logic                  clk, reset,
    // Privileged
    input  logic                  MTimerInt, MExtInt, SExtInt, MSwInt,

@@ -307,7 +307,8 @@ module spi_apb import cvw::*; #(parameter cvw_t P) (
   // Shift Registers --------------------------------------------------
   // Transmit shift register
   assign TransmitLoad = TransmitStart | (EndOfFrame & ~TransmitFIFOEmpty);
-  assign TransmitDataEndian = Format[0] ? {<<{TransmitReadData[7:0]}} : TransmitReadData[7:0];
+  // assign TransmitDataEndian = Format[0] ? {<<{TransmitReadData[7:0]}} : TransmitReadData[7:0];
+  assign TransmitDataEndian = Format[0] ? {TransmitReadData[0], TransmitReadData[1], TransmitReadData[2], TransmitReadData[3], TransmitReadData[4], TransmitReadData[5], TransmitReadData[6], TransmitReadData[7]} : TransmitReadData[7:0];
   always_ff @(posedge PCLK)
     if(~PRESETn)            TransmitReg <= 8'b0;
     else if (TransmitLoad)  TransmitReg <= TransmitDataEndian;
@@ -332,7 +333,8 @@ module spi_apb import cvw::*; #(parameter cvw_t P) (
   // Aligns received data and reverses if little-endian
   assign LeftShiftAmount = 4'h8 - FrameLength;
   assign ASR = ReceiveShiftReg << LeftShiftAmount[2:0];
-  assign ReceiveShiftRegEndian = Format[0] ? {<<{ASR[7:0]}} : ASR[7:0];
+  // assign ReceiveShiftRegEndian = Format[0] ? {<<{ASR[7:0]}} : ASR[7:0];
+  assign ReceiveShiftRegEndian = Format[0] ? {ASR[0], ASR[1], ASR[2], ASR[3], ASR[4], ASR[5], ASR[6], ASR[7]} : ASR[7:0];
 
   // Interrupt logic: raise interrupt if any enabled interrupts are pending
   assign SPIIntr = |(InterruptPending & InterruptEnable);

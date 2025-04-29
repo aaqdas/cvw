@@ -1,0 +1,8 @@
+*.cmd*
+*.log*
+.rs*
+fv/
+rtl/
+log/
+.st_launch*
+*.db

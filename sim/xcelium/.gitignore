@@ -1,0 +1,8 @@
+*.simvision
+waves.shm/
+log.*
+*.log
+*.fsdb
+*.history
+*.key
+*.diag
