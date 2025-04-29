@@ -6,17 +6,6 @@
 # start run clock
 set t1 [clock seconds]
 
-# Ignore unnecessary warnings:
-# intraassignment delays for nonblocking assignments are ignored
-suppress_message {VER-130} 
-# statements in initial blocks are ignored
-suppress_message {VER-281} 
-suppress_message {VER-173} 
- # Unsupported system task '$warn'
-suppress_message {VER-274}
-# Disable Warning:  Little argument or return value checking implemented for system task or function '$readmemh'. (VER-209)
-suppress_message {VER-209}
-
 # Enable Multicore
 set_host_options -max_cores $::env(MAXCORES)
 

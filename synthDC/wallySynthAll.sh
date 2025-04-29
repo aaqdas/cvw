@@ -19,3 +19,6 @@ sleep 300
 # Extract summary data (run this by hand after all experiments finish)
 ./extractSummary.py --sky130freq 330 --sky90freq 870 --tsmcfreq 2800
 
+
+# Synthesis for FreePD15 using Cadence Genus
+./wallySynth.py -t 1700 --tech freepdk15 -g

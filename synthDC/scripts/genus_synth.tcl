@@ -14,11 +14,11 @@ set_db max_cpus_per_server 16
 set outputDir $::env(OUTPUTDIR)
 set cfg $::env(CONFIGDIR)
 set hdl_src "../src"
-set saifpower $::env(SAIFPOWER)
 set maxopt $::env(MAXOPT)
 set drive $::env(DRIVE)
 set width $::env(WIDTH)
 
+set_db hdl_parameter_naming_style "" 
 
 eval file copy -force [glob ${cfg}/*.vh] {$outputDir/hdl/}
 eval file copy -force [glob ${hdl_src}/cvw.sv] {$outputDir/hdl/}
@@ -66,7 +66,10 @@ set_db init_lib_search_path $LIB_DIR
 # Specify RTL Directory Paths
 set_db init_hdl_search_path $outputDir/hdl
 
+# Preserve All Nets and Registers
 
+
+# set_db preserve size_ok
 
 # *********************************************************
 # Set Variables For Quick Modifications
@@ -97,13 +100,14 @@ set rpt_dir  "${outputDir}/reports/"
 
     check_timing_intent
 
-# Design Constraints
+    read_stimulus -file /home/min/a/aaqdas/Documents/cvw/sim/xcelium/testbench.fsdb
 
 # Set Frequency in [MHz] or period in [ns]
 set my_clock_pin clk
 set my_uncertainty 0.0
 set my_clk_freq_MHz $::env(FREQ)
-set my_period [expr 1000.0 / $my_clk_freq_MHz]
+# period in picoseconds
+set my_period [expr 1000000.0 / $my_clk_freq_MHz] 
 
 # Create clock object 
 set find_clock [ get_ports $my_clock_pin]
@@ -175,18 +179,20 @@ time_info MAPPED
 syn_opt
 report_timing > ${rpt_dir}/final_timing.rpt
 report_area   > ${rpt_dir}/final_area.rpt
-report_power -by_hierarchy > ${rpt_dir}/final_static_power.rpt
-write_snapshot -outdir $rpt_dir -tag opt
+
+write_snapshot -outdir $rpt_dir -tag syn_opt
 report_summary -directory $rpt_dir
 puts "Runtime and Memory after syn_opt"
 time_info OPT
 
-write_snapshot -outdir $rpt_dir -tag syn_opt
-report_summary -directory $rpt_dir
+compute_power -mode time_based
 
+write_snapshot -outdir $rpt_dir -tag final
+report_power -by_hierarchy > ${rpt_dir}/final_static_power.rpt/
+report_summary -directory $rpt_dir
+report_units > ${rpt_dir}/final_units.rpt
 
 write_hdl > ${outputDir}/mapped/wallypipelinedcore.sv
-
 
 report_power -module alu > ${rpt_dir}/alu_power.rpt
 report_power -module dcache > ${rpt_dir}/dcache_power.rpt
